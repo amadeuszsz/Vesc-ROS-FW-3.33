@@ -62,7 +62,7 @@ void VescToOdom::vescStateCallback(const vesc_msgs::VescStateStamped::ConstPtr& 
   double current_steering_angle(0.0), current_angular_velocity(0.0);
   if (use_servo_cmd_) {
     current_steering_angle =
-      ( last_servo_cmd_->data - steering_to_servo_offset_ ) / steering_to_servo_gain_;
+      ( last_servo_cmd_->state.servo - steering_to_servo_offset_ ) / steering_to_servo_gain_;
     current_angular_velocity = current_speed * tan(current_steering_angle) / wheelbase_;
   }
 
@@ -133,7 +133,7 @@ void VescToOdom::vescStateCallback(const vesc_msgs::VescStateStamped::ConstPtr& 
   }
 }
 
-void VescToOdom::servoCmdCallback(const std_msgs::Float64::ConstPtr& servo)
+void VescToOdom::servoCmdCallback(const vesc_msgs::VescServoStateStamped::ConstPtr& servo)
 {
   last_servo_cmd_ = servo;
 }
